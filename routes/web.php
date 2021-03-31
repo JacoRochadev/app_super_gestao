@@ -12,30 +12,29 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
-    return 'Olá,mundo';
+Route::get('/', [\App\Http\Controllers\PrincipalController::class, 'principal'])->name('site.index');
+Route::get('/sobre-nos', [\App\Http\Controllers\SobreNosController::class, 'sobrenos'])->name('site.sobre-nos');
+Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato'])->name('site.contato');
+Route::get('/login', function(){return 'login';})->name('site.login');
+
+
+Route::prefix('/app')->group(function(){
+    Route::get('/clientes', function(){return 'clientes';})->name('app.clientes');
+    Route::get('/fornecedores', function(){return 'fornecedores';})->name('app.fornecedores');
+    Route::get('/produtos', function(){return 'produtos';})->name('app.produtos');
 });
-Route::get('/sobre-nos', function () {
-    return 'Sobre nos';
+
+Route::get('/rota1', function(){
+    echo 'rota1';
+})->name('site.rota1');
+
+Route::get('/rota2', function(){
+    return redirect()->route('site.rota1');
+})->name('site.rota2');
+
+Route::fallback(function(){
+    echo 'rotanão encontrada, <a href="'.route('site.index').'">clique aqui</a> para a rota principal';
 });
-Route::get('/contato', function () {
-    return 'Contato';
-});
-*/
-Route::get('/', [\App\Http\Controllers\PrincipalController::class, 'principal']);
-Route::get('/sobre-nos', [\App\Http\Controllers\SobreNosController::class, 'sobrenos']);
-Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato']);
-
-
-
-
-
-
-
-//$uri = caminho $callback= ação que deve ser tomada quando a rota for requisitada
-//Route::get($uri,$callback)
-
 /**
  * verbo http
  * get
