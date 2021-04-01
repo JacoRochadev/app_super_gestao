@@ -20,17 +20,12 @@ Route::get('/login', function(){return 'login';})->name('site.login');
 
 Route::prefix('/app')->group(function(){
     Route::get('/clientes', function(){return 'clientes';})->name('app.clientes');
-    Route::get('/fornecedores', function(){return 'fornecedores';})->name('app.fornecedores');
+    Route::get('/fornecedores', [\App\Http\Controllers\FornecedorController::class, 'index'])->name('app.fornecedores');
     Route::get('/produtos', function(){return 'produtos';})->name('app.produtos');
 });
 
-Route::get('/rota1', function(){
-    echo 'rota1';
-})->name('site.rota1');
+Route::get('/teste/{p1}/{p2}',[\App\Http\Controllers\TesteController::class, 'teste'])->name('teste');
 
-Route::get('/rota2', function(){
-    return redirect()->route('site.rota1');
-})->name('site.rota2');
 
 Route::fallback(function(){
     echo 'rotanão encontrada, <a href="'.route('site.index').'">clique aqui</a> para a rota principal';
